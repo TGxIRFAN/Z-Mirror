@@ -584,6 +584,7 @@ if not ospath.exists('accounts'):
 alive = Popen(["python3", "alive.py"])
 sleep(0.5)
 
+
 def get_client():
     return qbClient(host="localhost", port=8090, REQUESTS_ARGS={"timeout": (30, 60)})
 
