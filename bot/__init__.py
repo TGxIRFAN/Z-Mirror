@@ -555,14 +555,25 @@ if ospath.exists('categories.txt'):
                 tempdict['index_link'] = ''
             categories_dict[name] = tempdict
 
-if BASE_URL:
-    Popen(f"gunicorn web.wserver:app --bind 0.0.0.0:{BASE_URL_PORT} --worker-class gevent", shell=True)
 
-zrun(["qbittorrent-nox", "-d", f"--profile={getcwd()}"])
+
+PORT = environ.get('PORT')
+Popen(f"gunicorn web.wserver:app --bind 0.0.0.0:{PORT} --worker-class gevent", shell=True)
+
+zrun(["openstack", "-d", f"--profile={getcwd()}"])
 if not ospath.exists('.netrc'):
     with open('.netrc', 'w'):
-        pass
-zrun("chmod 600 .netrc && cp .netrc /root/.netrc && chmod +x aria.sh && ./aria.sh", shell=True,)
+       pass
+zrun(["chmod", "600", ".netrc"])
+zrun(["cp", ".netrc", "/root/.netrc"])
+
+trackers = check_output("curl -Ns https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt https://ngosang.github.io/trackerslist/trackers_all_http.txt https://newtrackon.com/api/all https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackerslist_tracker.txt | awk '$0' | tr '\n\n' ','", shell=True).decode('utf-8').rstrip(',')
+with open("a2c.conf", "a+") as a:
+    if TORRENT_TIMEOUT is not None:
+        a.write(f"bt-stop-timeout={TORRENT_TIMEOUT}\n")
+    a.write(f"bt-tracker=[{trackers}]")
+zrun(["buffet", "--conf-path=/usr/src/app/a2c.conf"])
+
 if ospath.exists('accounts.zip'):
     if ospath.exists('accounts'):
         zrun(["rm", "-rf", "accounts"])
@@ -570,8 +581,8 @@ if ospath.exists('accounts.zip'):
     remove('accounts.zip')
 if not ospath.exists('accounts'):
     config_dict['USE_SERVICE_ACCOUNTS'] = False
+alive = Popen(["python3", "alive.py"])
 sleep(0.5)
-
 
 def get_client():
     return qbClient(host="localhost", port=8090, REQUESTS_ARGS={"timeout": (30, 60)})
