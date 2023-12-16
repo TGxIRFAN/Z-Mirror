@@ -61,6 +61,7 @@ class MirrorLeechListener:
         self.newDir = ""
         self.dir = f"{DOWNLOAD_DIR}{self.uid}"
         self.select = select
+        self.isSuperGroup = message.chat.type in [ChatType.SUPERGROUP, ChatType.CHANNEL]
         self.isPrivate = message.chat.type == ChatType.BOT
         self.suproc = None
         self.sameDir = sameDir
@@ -75,8 +76,7 @@ class MirrorLeechListener:
         self.logMessage = logMessage
         self.extra_details = {'startTime': time()}
         self.__setMode()
-        self.__source()
-        self.leechlogmsg = None           
+        self.__source()           
 
     async def clean(self):
         try:
