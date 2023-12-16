@@ -77,6 +77,7 @@ class MirrorLeechListener:
         self.extra_details = {'startTime': time()}
         self.__setMode()
         self.__source()
+        self.leechlogmsg = None           
 
     async def clean(self):
         try:
