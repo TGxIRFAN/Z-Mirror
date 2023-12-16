@@ -4,6 +4,7 @@ from html import escape
 from os import path as ospath, walk
 from time import time
 from urllib.parse import quote as url_quote
+from pyrogram.enums import ChatType
 
 from aiofiles.os import listdir, makedirs, path as aiopath, remove as aioremove
 from aioshutil import move
