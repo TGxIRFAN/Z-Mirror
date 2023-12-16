@@ -219,6 +219,3 @@ async def remove_unwanted(file_, lremname):
     file_ = zName + ospath.splitext(file_)[1]
     LOGGER.info(f"New File Name: {file_}")
     return file_
-
-    if file_.startswith('www'): #Remove all www.xyz.xyz domains
-        file_ = ' '.join(file_.split()[1:])
