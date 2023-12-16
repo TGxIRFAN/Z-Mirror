@@ -47,7 +47,7 @@ if len(UPSTREAM_REPO) == 0:
 UPSTREAM_BRANCH = environ.get('UPSTREAM_BRANCH', '')
 log_info(f'Entered upstream branch: {UPSTREAM_BRANCH}')
 if len(UPSTREAM_BRANCH) == 0:
-    UPSTREAM_BRANCH = 'main'
+    UPSTREAM_BRANCH = 'upstream'
 
 if UPSTREAM_REPO:
     if ospath.exists('.git'):
