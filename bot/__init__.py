@@ -6,7 +6,7 @@ from logging import (ERROR, INFO, FileHandler, StreamHandler, basicConfig,
                      error, getLogger, info, warning)
 from os import environ, path as ospath, remove, getcwd
 from socket import setdefaulttimeout
-from subprocess import Popen, run as zrun
+from subprocess import Popen, run as zrun, check_output
 from time import sleep, time
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
